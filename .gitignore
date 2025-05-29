@@ -1,0 +1,61 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# VS Code
+.vscode/
+
+# Logs and outputs
+*.log
+*.out
+
+# Environment variables or credentials
+.env
+.env.*
+
+# Dataset files (optional - uncomment if dataset is large or sensitive)
+# *.csv
+# *.xlsx
+
+# Model and output files
+*.pkl
+*.joblib
+*.h5
+
+# Streamlit or Flask cache
+.streamlit/
+__pycache__/
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
