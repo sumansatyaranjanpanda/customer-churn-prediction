@@ -1,6 +1,3 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Build and deploy container app to Azure Web App - customerchurnpredictionproject
 
 on:
@@ -11,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: 'ubuntu-latest'
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -19,33 +16,32 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Log in to registry
+    - name: Log in to Azure Container Registry
       uses: docker/login-action@v2
       with:
-        registry: https://dockerchurnprediction.azurecr.io/
-        username: ${{ secrets.AzureAppService_ContainerUsername_f2d68e5cf5a24b3fbd16ba4cbe9e04fc }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_a6750c32eef04e1fbbadc064191b9b5d }}
+        registry: dockerchurnprediction.azurecr.io
+        username: ${{ secrets.AZURE_ACR_USERNAME }}
+        password: ${{ secrets.AZURE_ACR_PASSWORD }}
 
-    - name: Build and push container image to registry
+    - name: Build and Push Docker image to ACR
       uses: docker/build-push-action@v3
       with:
+        context: .
         push: true
-        tags: dockerchurnprediction.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f2d68e5cf5a24b3fbd16ba4cbe9e04fc }}/customerchurnpredictionproject:${{ github.sha }}
-        file: ./Dockerfile
+        tags: dockerchurnprediction.azurecr.io/customerchurnpredictionproject:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      name: production
 
     steps:
     - name: Deploy to Azure Web App
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'customerchurnpredictionproject'
+        app-name: 'customerchurnpredictionproject'  # Azure Web App name
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_6d433ffa2fcf4971a28c11bf7deac252 }}
-        images: 'dockerchurnprediction.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_f2d68e5cf5a24b3fbd16ba4cbe9e04fc }}/customerchurnpredictionproject:${{ github.sha }}'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        images: 'dockerchurnprediction.azurecr.io/customerchurnpredictionproject:${{ github.sha }}'
