@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template
 import pandas as pd
 from src.pipeline.predict_pipeline import CustomData, PredictPipeline
+import os
 
 application = Flask(__name__)
 app = application
@@ -57,4 +58,5 @@ def predict_datapoint():
             return render_template('home.html', prediction_text=error_message)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5000,debug=True)
+    port = int(os.environ.get('PORT', 5000))  # Azure sets this env variable
+    app.run(host='0.0.0.0', port=port, debug=True)
