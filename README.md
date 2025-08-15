@@ -11,6 +11,10 @@ The goal is to:
 
 ---
 
+
+https://github.com/user-attachments/assets/122fbed8-575a-4322-ab3d-00f3d10ebb4b
+
+
 ## 📊 Dataset
 We used the **Telco Customer Churn Dataset** from Kaggle:  
 https://www.kaggle.com/blastchar/telco-customer-churn
